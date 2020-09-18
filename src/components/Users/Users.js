@@ -1,34 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 import UserItem from './UserItem';
-class Users extends Component {
-    state = {
-        User: [
-            {
-                id: "1",
-                user: "@kumarahul",
-                avtar_url: "https://avatars1.githubusercontent.com/u/32619505?s=400&u=0bca6817342ae9eba8acb2749851fcf653cb8184&v=4",
-                profile_url: "https://github.com/kumarahul98"
+import Loader from 'react-loader-spinner';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
-            },
-            {
-                id: "2",
-                user: "@kumarahul",
-                avtar_url: "https://avatars1.githubusercontent.com/u/32619505?s=400&u=0bca6817342ae9eba8acb2749851fcf653cb8184&v=4",
-                profile_url: "https://github.com/kumarahul98"
 
-            },
-            {
-                id: "3",
-                user: "@kumarahul",
-                avtar_url: "https://avatars1.githubusercontent.com/u/32619505?s=400&u=0bca6817342ae9eba8acb2749851fcf653cb8184&v=4",
-                profile_url: "https://github.com/kumarahul98"
-
-            }]
-    };
-    render() {
+const Users = (props) => {
+    if (props.loading) {
+        return (
+            <Loader type="Puff" color="#00BFFF" style={centered} height={80} width={80} />
+        )
+    }
+    else {
         return (
             <div className="row">
-                {this.props.users.map(user => (
+                {props.users.map(user => (
                     <UserItem id={user.id} user={user} />
                 ))}
             </div>
@@ -36,4 +21,10 @@ class Users extends Component {
     }
 }
 
+const centered = {
+    position: 'fixed', /* or absolute */
+top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+}
 export default Users

@@ -4,15 +4,17 @@ import Navbar from "./components/Layout/Navbar";
 import Users from "./components/Users/Users";
 
 import axios from 'axios';
+
 class App extends Component {
   state = {
     users: [],
-    loading: false
+    loading: true
   }
+  
   async componentDidMount() {
     this.setState({ loading: true });
     const res = await axios.get('https://api.github.com/users');
-    this.setState({ loading: false, users: res.data })
+    setTimeout(() => { this.setState({ loading: false, users: res.data }) }, 1500);
   }
 
   render() {
