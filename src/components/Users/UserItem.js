@@ -2,10 +2,10 @@ import React, { Fragment } from "react";
 
 const UserItem = (props) => {
   //Destructure 
-  const { id, login, avatar_url, html_url } = props.user;
+  const { login, avatar_url, html_url } = props.user;
   return (
     <Fragment>
-      <div className="card " style={{ width: '11rem', margin: '1rem' }}>
+      <div className="card col-md-2" style={{ width: '11rem', margin: '1rem' }}>
         <img className="card-img-top rounded-circle" src={avatar_url} alt="user-avatar" />
         <div className="card-body text-center">
           <h5 className="card-title">{login}</h5>
