@@ -17,6 +17,7 @@ class App extends Component {
     user: {},
     loading: false,
     alert: null,
+    repos:[]
   };
 
   // async componentDidMount() {
@@ -40,7 +41,11 @@ class App extends Component {
       `https://api.github.com/users/${user}?q=client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
     );
     this.setState({ loading: false, user: res.data });
-    // console.log(res.data );
+    const repos = await axios.get(
+      `https://api.github.com/users/${user}/repos?q=client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    );
+    this.setState({ loading: false, repos: repos.data });
+    console.log(repos.data );
   };
   clearUser = () => {
     this.setState({ loading: false, users: [] });
@@ -60,7 +65,7 @@ class App extends Component {
             <Route exact path="/about">
               <About />
             </Route>
-            <Route path="/user/:login" render={props => (<User {...props} getUser={this.getUser} loading={this.state.loading} User={this.state.user} />)} />
+            <Route path="/user/:login" render={props => (<User {...props} getUser={this.getUser} loading={this.state.loading} User={this.state.user} Repos={this.state.repos}/>)} />
             <Route exact path="/*">
               <div className="container">
                 <Alert alert={this.state.alert} />
