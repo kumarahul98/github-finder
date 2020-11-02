@@ -1,5 +1,6 @@
 import React from "react";
 import { FaInfo } from "react-icons/fa";
+import PropTypes from "prop-types";
 
 const Alert = ({alert}) => {
   return (
@@ -10,4 +11,7 @@ const Alert = ({alert}) => {
     )
   );
 };
+Alert.propTypes = {
+  alert: PropTypes.shape({}),
+}
 export default Alert;

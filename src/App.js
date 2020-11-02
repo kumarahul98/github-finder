@@ -37,9 +37,10 @@ class App extends Component {
   getUser = async (user) => {
     this.setState({ loading: true });
     const res = await axios.get(
-      `https://api.github.com/search/user/${user}?q=client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      `https://api.github.com/users/${user}?q=client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
     );
     this.setState({ loading: false, user: res.data });
+    // console.log(res.data );
   };
   clearUser = () => {
     this.setState({ loading: false, users: [] });
@@ -56,7 +57,11 @@ class App extends Component {
             <Navbar title="Github Finder" />
           </div>
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/about">
+              <About />
+            </Route>
+            <Route path="/user/:login" render={props => (<User {...props} getUser={this.getUser} loading={this.state.loading} User={this.state.user} />)} />
+            <Route exact path="/*">
               <div className="container">
                 <Alert alert={this.state.alert} />
                 <Search
@@ -73,10 +78,6 @@ class App extends Component {
                 </div>
               </div>
             </Route>
-            <Route exact path="/about">
-              <About />
-            </Route>
-            <Route path="/user/:login"><User  /></Route>
           </Switch>
         </div>
       </Router>

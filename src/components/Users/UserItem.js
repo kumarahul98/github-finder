@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-
+import PropTypes from "prop-types";
 const UserItem = (props) => {
   //Destructure
   const { login, avatar_url } = props.user;
   return (
     <Fragment>
       <div
-        className="card col-md-2 "
+        className="card col-md-2"
         style={{ width: "11rem", margin: "1rem" }}
       >
         <img
@@ -25,5 +25,10 @@ const UserItem = (props) => {
     </Fragment>
   );
 };
+
+UserItem.propType = {
+  login: PropTypes.string.isRequired,
+  avatar_url: PropTypes.string.isRequired
+}
 
 export default UserItem;

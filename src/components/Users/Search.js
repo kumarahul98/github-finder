@@ -8,16 +8,18 @@ class Search extends Component {
     clearUser: PropTypes.func.isRequired,
     searchUser: PropTypes.func.isRequired,
     setAlert: PropTypes.func,
+    showClear: PropTypes.bool.isRequired,
   };
   onChange = (e) => {
     this.setState({ search: e.target.value });
   };
   onSubmit = (e) => {
     e.preventDefault();
-    if (this.state.search === "") {
+    const { search } = this.state;
+    if (search === "") {
       this.props.setAlert("Plz enter something", "light");
     } else {
-      this.props.searchUser(this.state.search);
+      this.props.searchUser(search);
       this.setState({ search: "" });
     }
   };
