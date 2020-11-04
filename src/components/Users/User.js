@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { FiCheckSquare, FiExternalLink } from "react-icons/fi";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import UserRepos from "./UserRepos";
 
 
-export class User extends Component {
-  componentDidMount() {
+const User = ({ getUser, User, Repos, match}) => {
+  useEffect(()=> {
+    getUser(match.params.login);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    this.props.getUser(this.props.match.params.login);
-  }
-  render() {
-    const { avatar_url, bio, blog, company, email, followers, following, login, name, public_repos, html_url, hireable } = this.props.User;
+    const { avatar_url, bio, blog, company, email, followers, following, login, name, public_repos, html_url, hireable } = User;
     return (
       <div className="container">
         <div className="card " style={{margin:".5rem"}}>
@@ -43,11 +43,11 @@ export class User extends Component {
           </div>
         </div>
         <div className="card row" style={{ margin: ".5rem" }} >
-          {this.props.Repos.map(repo => <UserRepos key={repo.id} repo={repo} /> )}
+          {Repos.map(repo => <UserRepos key={repo.id} repo={repo} /> )}
         </div>
       </div>
     )
-  }
+
 }
 
 export default User;

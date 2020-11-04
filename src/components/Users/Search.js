@@ -1,42 +1,33 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-class Search extends Component {
-  state = {
-    search: "",
+const Search = ({ searchUser, clearUser, setAlert, showClear}) => {
+  const [search,setSearch]=useState('');
+   
+  const onChange = (e) => {
+     setSearch(e.target.value);
   };
-  static propTypes = {
-    clearUser: PropTypes.func.isRequired,
-    searchUser: PropTypes.func.isRequired,
-    setAlert: PropTypes.func,
-    showClear: PropTypes.bool.isRequired,
-  };
-  onChange = (e) => {
-    this.setState({ search: e.target.value });
-  };
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    const { search } = this.state;
     if (search === "") {
-      this.props.setAlert("Plz enter something", "light");
+      setAlert("Plz enter something", "light");
     } else {
-      this.props.searchUser(search);
-      this.setState({ search: "" });
+      searchUser(search);
+      setSearch('');
     }
   };
-  render() {
     return (
       <div>
-        <form onSubmit={this.onSubmit} className="form">
+        <form onSubmit={onSubmit} className="form">
           <div
             className="form-group input-group input-group-lg"
             style={top_margin}
           >
             <input
               type="text"
-              value={this.state.search}
+              value={search}
               className="form-control"
               placeholder="Enter Username"
-              onChange={this.onChange}
+              onChange={onChange}
             />{" "}
           </div>
           <div className="form-group">
@@ -48,19 +39,25 @@ class Search extends Component {
             />{" "}
           </div>
         </form>
-        {this.props.showClear && (
+        {showClear && (
           <button
             className="btn btn-secondary  btn-lg btn-block "
-            onClick={this.props.clearUser}
+            onClick={clearUser}
           >
             Clear
           </button>
         )}
       </div>
     );
-  }
+
 }
 const top_margin = {
   marginTop: ".5rem",
+};
+Search.propTypes = {
+  clearUser: PropTypes.func.isRequired,
+  searchUser: PropTypes.func.isRequired,
+  setAlert: PropTypes.func,
+  showClear: PropTypes.bool.isRequired,
 };
 export default Search;
