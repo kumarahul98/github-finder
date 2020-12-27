@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useContext} from 'react'
 import UserItem from './UserItem';
 import Loader from 'react-loader-spinner';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import PropTypes from 'prop-types';
 
-const Users = (props) => {
-    if (props.loading) {
+import GithubContext from '../../context/github/githubContext';
+
+const Users = () => {
+    const githubContext = useContext(GithubContext)
+    const {loading, users} = githubContext;
+    console.log(users);
+    if (loading || !users ) {
         return (
             <Loader type="Puff" color="#00BFFF" style={centered} height={80} width={80} />
         )
@@ -13,7 +18,7 @@ const Users = (props) => {
     else {
         return (
             <div className="row container " style={center}>
-                {props.users.map(user => (
+                {users.map(user => (
                     <UserItem key={user.id} user={user} />
                 ))}
             </div>
@@ -21,10 +26,6 @@ const Users = (props) => {
     }
 }
 
-Users.propTypes = {
-    users: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired
-}
 const centered = {
     position: 'fixed', /* or absolute */
     top: '50%',
