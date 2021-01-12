@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import PropTypes from "prop-types";
 import GithubContext from "../../context/github/githubContext";
-import GithubState from "../../context/github/GithubState";
+import AlertContext from "../../context/alert/AlertContext";
 
-const Search = ({ clearUser, setAlert, showClear }) => {
-  const githubContext = useContext(GithubContext)
+const Search = () => {
+  const githubContext = useContext(GithubContext);
+  const alertContext = useContext(AlertContext);
   const [search, setSearch] = useState('');
 
   const onChange = (e) => {
@@ -13,7 +13,7 @@ const Search = ({ clearUser, setAlert, showClear }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (search === "") {
-      setAlert("Plz enter something", "light");
+      alertContext.setAlert("Plz enter something", "light");
     } else {
       githubContext.searchUser(search);
       setSearch('');
@@ -40,13 +40,13 @@ const Search = ({ clearUser, setAlert, showClear }) => {
             id="submit"
             className="btn btn-dark btn-lg btn-block"
             value="Submit"
-          />{" "}
+          />
         </div>
       </form>
-      {showClear && (
+      {  githubContext.users && githubContext.users.length > 0 && (
         <button
           className="btn btn-secondary  btn-lg btn-block "
-          onClick={clearUser}
+          onClick={githubContext.clearUser}
         >
           Clear
         </button>
@@ -58,9 +58,5 @@ const Search = ({ clearUser, setAlert, showClear }) => {
 const top_margin = {
   marginTop: ".5rem",
 };
-Search.propTypes = {
-  clearUser: PropTypes.func.isRequired,
-  setAlert: PropTypes.func,
-  showClear: PropTypes.bool.isRequired,
-};
+
 export default Search;

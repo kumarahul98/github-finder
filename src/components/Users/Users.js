@@ -2,7 +2,6 @@ import React, { useContext} from 'react'
 import UserItem from './UserItem';
 import Loader from 'react-loader-spinner';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
-import PropTypes from 'prop-types';
 
 import GithubContext from '../../context/github/githubContext';
 

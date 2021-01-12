@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { FiCheckSquare, FiExternalLink } from "react-icons/fi";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import UserRepos from "./UserRepos";
+import GithubContext from "../../context/github/githubContext";
 
 
-const User = ({ getUser, User, Repos, match}) => {
+const User = ({ match}) => {
+  const githubContext = useContext(GithubContext);
+  const {getUser, user, repos} = githubContext;
   useEffect(()=> {
     getUser(match.params.login);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-    const { avatar_url, bio, blog, company, email, followers, following, login, name, public_repos, html_url, hireable } = User;
+    const { avatar_url, bio, blog, company, email, followers, following, login, name, public_repos, html_url, hireable } = user;
     return (
       <div className="container">
         <div className="card " style={{margin:".5rem"}}>
@@ -43,7 +46,7 @@ const User = ({ getUser, User, Repos, match}) => {
           </div>
         </div>
         <div className="card row" style={{ margin: ".5rem" }} >
-          {Repos.map(repo => <UserRepos key={repo.id} repo={repo} /> )}
+          {repos.map(repo => <UserRepos key={repo.id} repo={repo} /> )}
         </div>
       </div>
     )
