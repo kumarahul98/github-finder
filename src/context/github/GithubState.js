@@ -18,13 +18,24 @@ const GithubState = props => {
         loading: false
     }
     const [state, dispatch] = useReducer(GithubReducer, initialState);
+    let clientId;
+    let clientSecret;
+    if(process.env.NODE_ENV==='production')
+    {
+        clientId=process.env.REACT_APP_GITHUB_CLIENT_ID;
+        clientSecret=process.env.REACT_APP_GITHUB_CLIENT_SECRET;
+    }
+    else{
+        clientId=process.env.CLIENT_ID;
+        clientSecret=process.env.CLIENT_SECRET;
+    }
 
     // Search Users
     const searchUser = async (search) => {
         try{
         setLoading();
         const res = await axios.get(
-            `https://api.github.com/search/users?q=${search}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+            `https://api.github.com/search/users?q=${search}&client_id=${clientId}&client_secret=${clientSecret}`
         );
         console.log("Users",res.data.items);
         dispatch({
@@ -41,7 +52,7 @@ const GithubState = props => {
     const getUser = async (user) => {
         setLoading();
         const res = await axios.get(
-          `https://api.github.com/users/${user}?q=client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+          `https://api.github.com/users/${user}?q=client_id=${clientId}&client_secret=${clientSecret}`
         );
         dispatch({
             type: GET_USER,
@@ -52,7 +63,7 @@ const GithubState = props => {
 
     // Get Repos
     const repos = await axios.get(
-        `https://api.github.com/users/${user}/repos?q=client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+        `https://api.github.com/users/${user}/repos?q=client_id=${clientId}&client_secret=${clientSecret}`
       );    
       dispatch({
           type: GET_REPOS,
