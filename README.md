@@ -2,6 +2,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Github Finder
 
-[github-finder.kumarahul.xyz](github-finder.kumarahul.xyz)
+[github-finder.kumarahul.xyz](https://github-finder.kumarahul.xyz)
 
 
